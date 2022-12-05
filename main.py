@@ -29,24 +29,8 @@ CSV_FIELDS = [
 
 
 def main():
-  households: dict[Address, list[Person]] = {}
-  people: list[Person] = []
-
-  # fileinput handles opening files specified as command line args
-  # and reading from stdin when no args are provided
-  with fileinput.input() as f:
-    reader = csv.DictReader(f, fieldnames=CSV_FIELDS)
-    for row in reader:
-      age = int(row["age"])
-      address = Address(row['street address'], row['city'], row['state'])
-      person = Person(row['firstname'], row['lastname'], age, address)
-
-      people.append(person)
-
-      if address in households:
-        households[address].append(person)
-      else:
-        households[address] = [person]
+  people = readPeople()
+  households = collateHouseholds(people)
 
   # TODO(evan): make output prettier
   print('# Households:')
@@ -56,6 +40,32 @@ def main():
   print('\n# Adult occupants:')
   for person in sorted(p for p in people if p.isAdult()):
     print(person)
+
+
+def readPeople() -> list[Person]:
+  """Read list of people from either csv files or stdin."""
+  people: list[Person] = []
+  # fileinput handles opening files specified as command line args
+  # and reading from stdin when no args are provided
+  with fileinput.input() as f:
+    reader = csv.DictReader(f, fieldnames=CSV_FIELDS)
+    for row in reader:
+      age = int(row["age"])
+      address = Address(row['street address'], row['city'], row['state'])
+      person = Person(row['firstname'], row['lastname'], age, address)
+      people.append(person)
+  return people
+
+
+def collateHouseholds(people: list[Person]) -> dict[Address, list[Person]]:
+  """group given people by shared addresses and return as a dict."""
+  households: dict[Address, list[Person]] = {}
+  for person in people:
+    if person.address in households:
+      households[person.address].append(person)
+    else:
+      households[person.address] = [person]
+  return households
 
 
 def needsHelp() -> bool:

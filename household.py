@@ -81,6 +81,7 @@ class Person:
   address: Address
 
   def __post_init__(self):
+    """Error out early if trying to construct an invalid Person object."""
     if not isinstance(self.firstname, str):
       raise TypeError(f'firstname must be a string, got {self.firstname}')
 
@@ -97,14 +98,10 @@ class Person:
     return (f'Person({self.firstname}, {self.lastname},'
             f' {self.age}, {self.address})')
 
-  def _is_valid_operand(self, other):
-    return hasattr(other, "firstname") and hasattr(other, "lastname")
-
   def __lt__(self, other):
-    if not self._is_valid_operand(other):
+    if not (hasattr(other, "firstname") and hasattr(other, "lastname")):
       return NotImplemented
-    return ((self.lastname, self.firstname) <
-            (other.lastname, other.firstname))
+    return (self.lastname, self.firstname) < (other.lastname, other.firstname)
 
   def isAdult(self) -> bool:
     return self.age >= 18
