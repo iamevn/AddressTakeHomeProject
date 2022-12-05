@@ -1,3 +1,5 @@
+import re
+
 from dataclasses import dataclass
 from functools import total_ordering
 
@@ -16,8 +18,54 @@ class Address:
   city: str
   state: str
 
+  def __post_init__(self):
+    """Normalize Address values.
+
+    This is done after __init__() is finished but before anything else
+    gets a hold of the object so we can forcibly update the values
+    with `object.__setattr__()` despite being frozen.
+    """
+    street = Address.normalize_street(self.street)
+    city = Address.normalize_city(self.city)
+    state = Address.normalize_state(self.state)
+
+    object.__setattr__(self, 'street', street)
+    object.__setattr__(self, 'city', city)
+    object.__setattr__(self, 'state', state)
+
   def __repr__(self):
     return f'Address({self.street}, {self.city}, {self.state})'
+
+  @classmethod
+  def normalize_street(cls, street: str) -> str:
+    """Normalize street addresses by converting to all-caps and
+    cleaning abbreviations.
+
+    Appreviations have trailing "." characters removed.
+
+    TODO(evan): decide whether to strip or add comma before a
+    Secondary Unit Designator: https://pe.usps.com/text/pub28/28apc_003.htm
+
+    TODO(evan): consider further canonicalizing abbreviations
+    based on USPS standards: https://pe.usps.com/text/pub28/28apc_002.htm
+    """
+    caps = street.upper()
+    stripped = re.sub(r'\.(\W)|\.$', r'\1', caps)
+
+    return stripped.strip()
+
+  @classmethod
+  def normalize_city(cls, city: str) -> str:
+    """Normalize cities by converting to all-caps and cleaning."""
+    return city.upper().strip()
+
+  @classmethod
+  def normalize_state(cls, state: str) -> str:
+    """Normalize states by converting to all-caps and cleaning.
+
+    TODO(evan): consider mapping names to 2 letter codes (eg: Washington -> WA)
+    """
+    return state.upper().strip()
 
 
 @dataclass(eq=True, frozen=True)
