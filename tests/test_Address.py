@@ -9,7 +9,9 @@ class TestEquality(unittest.TestCase):
 
   def test_simple_equals(self):
     A = Address("123 Example St", "Seattle", "WA")
+    B = Address("123 Example St", "Seattle", "WA")
     self.assertEqual(A, A)
+    self.assertEqual(A, B)
 
   def test_simple_not_equals(self):
     A = Address("123 Example St", "Seattle", "WA")
