@@ -1,6 +1,10 @@
+#!/usr/bin/env python3
+
 import fileinput
 import sys
 import csv
+
+from household import Address
 
 HELP_TEXT = f"""
 Extract household and occupant info from provided data files.
@@ -29,7 +33,9 @@ def main():
   with fileinput.input() as f:
     reader = csv.DictReader(f, fieldnames=CSV_FIELDS)
     for row in reader:
-      print(row)
+      address = Address(row['street address'], row['city'], row['state'])
+      name = f'{row["firstname"]} {row["lastname"]}'
+      print(f'{name} ({row["age"]}): {address}')
 
 
 def needsHelp() -> bool:

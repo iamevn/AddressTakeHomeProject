@@ -1,5 +1,9 @@
 # Evan Minsk's Expeditors Take-Home Exercise
 
+Run with `$ python main.py input.csv`. (Alternatively: `$ cat input.csv | python main.py`.)
+
+Run tests with `$ python -m unittest` from the base of this repo.
+
 ## Assignment
  
 ### Exercise Summary:
