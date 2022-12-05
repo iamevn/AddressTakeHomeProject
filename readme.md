@@ -4,7 +4,7 @@ Run with `$ python main.py input.csv`. (Alternatively: `$ cat input.csv | python
 
 Run tests with `$ python -m unittest` from the base of this repo.
 
-(Requires Python version >= 3.6
+(Requires Python version >= 3.6)
 
 ## Assignment
  
@@ -102,5 +102,3 @@ If this isn't true the check in `Person.isAdult()` would need to change to use `
  
 - Output format is flexible, I went with more human-readable style but could have output as CSV like the input if this
 were a tool in some pipeline.
-
-- Input not malformed and if input is malformed then erroring out without processing the rest of input is okay.

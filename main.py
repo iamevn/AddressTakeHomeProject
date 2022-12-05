@@ -50,10 +50,13 @@ def readPeople() -> list[Person]:
   with fileinput.input() as f:
     reader = csv.DictReader(f, fieldnames=CSV_FIELDS)
     for row in reader:
-      age = int(row["age"])
-      address = Address(row['street address'], row['city'], row['state'])
-      person = Person(row['firstname'], row['lastname'], age, address)
-      people.append(person)
+      try:
+        age = int(row['age'])
+        address = Address(row['street address'], row['city'], row['state'])
+        person = Person(row['firstname'], row['lastname'], age, address)
+        people.append(person)
+      except (TypeError, ValueError) as e:
+        sys.stderr.write(f'Error processing row {row}\n{e}\n\n')
   return people
 
 
