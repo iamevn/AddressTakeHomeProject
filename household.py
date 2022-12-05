@@ -39,20 +39,19 @@ class Address:
   @classmethod
   def normalize_street(cls, street: str) -> str:
     """Normalize street addresses by converting to all-caps and
-    cleaning abbreviations.
+    cleaning abbreviations from the end of words.
 
     Appreviations have trailing "." characters removed.
-
-    TODO(evan): decide whether to strip or add comma before a
-    Secondary Unit Designator: https://pe.usps.com/text/pub28/28apc_003.htm
 
     TODO(evan): consider further canonicalizing abbreviations
     based on USPS standards: https://pe.usps.com/text/pub28/28apc_002.htm
     """
     caps = street.upper()
-    stripped = re.sub(r'\.(\W)|\.$', r'\1', caps)
+    nodots = re.sub(r'\.(\W)|\.$', r'\1', caps)
+    nocomma = re.sub(r',(\W)|,$', r'\1', nodots)
+    singlespace = re.sub(r' +', ' ', nocomma)
 
-    return stripped.strip()
+    return singlespace.strip()
 
   @classmethod
   def normalize_city(cls, city: str) -> str:

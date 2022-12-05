@@ -111,7 +111,15 @@ class TestNormalization(unittest.TestCase):
     self.assertStreetNormalizes('123 Exa.mple. st.', '123 EXA.MPLE ST')
     self.assertStreetNormalizes('123 .predot st.', '123 .PREDOT ST')
 
+  def test_normalize_street_commas(self):
+    self.assertStreetNormalizes('123 Example st,', '123 EXAMPLE ST')
+    self.assertStreetNormalizes('123 Exa,mple st,', '123 EXA,MPLE ST')
+    self.assertStreetNormalizes('123 Exa,mple st', '123 EXA,MPLE ST')
+    self.assertStreetNormalizes('123 Exa,mple, st,', '123 EXA,MPLE ST')
+    self.assertStreetNormalizes('123 ,precomma st,', '123 ,PRECOMMA ST')
+
   def test_normalize_street_whitespace(self):
     self.assertStreetNormalizes('123 Example st ', '123 EXAMPLE ST')
     self.assertStreetNormalizes(' 123 Example st', '123 EXAMPLE ST')
     self.assertStreetNormalizes('    123 Example st   ', '123 EXAMPLE ST')
+    self.assertStreetNormalizes('    123   Example   st   ', '123 EXAMPLE ST')
