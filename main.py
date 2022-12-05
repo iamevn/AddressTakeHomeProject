@@ -6,7 +6,7 @@ import csv
 
 from household import Address
 
-HELP_TEXT = f"""
+HELP_TEXT = """
 Extract household and occupant info from provided data files.
 
 Data files should be provided either as arguments.
@@ -27,6 +27,7 @@ CSV_FIELDS = [
   'age',
 ]
 
+
 def main():
   # fileinput handles opening files specified as command line args
   # and reading from stdin when no args are provided
@@ -41,11 +42,11 @@ def main():
 def needsHelp() -> bool:
   args = set(sys.argv[1:])
   return '--help' in args or '-h' in args
-    
+
 
 if __name__ == '__main__':
   if needsHelp():
     sys.stderr.write(HELP_TEXT)
     sys.exit(1)
-  
+
   main()

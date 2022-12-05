@@ -48,4 +48,3 @@ class TestHashability(unittest.TestCase):
     A = Address("123 Example St", "Seattle", "WA")
     B = Address("456 Some Other Lane", "Seattle", "WA")
     self.assertEqual(len({A, B, A, A, A, B}), 2)
-  
