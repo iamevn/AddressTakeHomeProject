@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 
-@dataclass(eq=True, frozen=True)  # generate __hash__() automatically
+@dataclass
 class Address:
   """US Address with fields for street address, city, and state.
 
