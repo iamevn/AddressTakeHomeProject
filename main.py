@@ -17,6 +17,7 @@ Data files are expected to be CSVs with fields for:
   first name, last name, street address, city, state, age
 
 """
+# what if we had a really really really really really really really really really really really really really really really really really really really really really really long line?
 
 CSV_FIELDS = [
   'firstname',
