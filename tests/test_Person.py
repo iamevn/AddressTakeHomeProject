@@ -90,44 +90,20 @@ class TestOrdering(unittest.TestCase):
     self.assertListEqual(sorted([C, B, A]), [A, B, C])
     self.assertListEqual(sorted([C, A]), [A, C])
 
-  def test_age_ordering(self):
-    A = Person("John", "Smith", 15, self.address)
-    B = Person("John", "Smith", 27, self.address)
-    C = Person("John", "Smith", 35, self.address)
-
-    self.assertLess(A, B)
-    self.assertLess(A, C)
-    self.assertLess(B, C)
-
-    self.assertGreater(B, A)
-    self.assertGreater(C, A)
-    self.assertGreater(C, B)
-
-    self.assertListEqual(sorted([C, A, B]), [A, B, C])
-    self.assertListEqual(sorted([C, B, A]), [A, B, C])
-    self.assertListEqual(sorted([C, A]), [A, C])
-
   def test_combined_ordering(self):
     A = Person("Jane", "Doe", 28, self.address)
     B = Person("John", "Doe", 27, self.address)
-    C = Person("John", "Doe", 35, self.address)
-    D = Person("Jane", "Smith", 15, self.address)
+    C = Person("Jane", "Smith", 15, self.address)
 
     self.assertLess(A, B)
     self.assertLess(A, C)
-    self.assertLess(A, D)
     self.assertLess(B, C)
-    self.assertLess(B, D)
-    self.assertLess(C, D)
 
     self.assertGreater(B, A)
     self.assertGreater(C, A)
-    self.assertGreater(D, A)
     self.assertGreater(C, B)
-    self.assertGreater(D, B)
-    self.assertGreater(D, C)
 
-    self.assertListEqual(sorted([A, B, C, D]), [A, B, C, D])
-    self.assertListEqual(sorted([C, A, D, B]), [A, B, C, D])
-    self.assertListEqual(sorted([D, B, A, C]), [A, B, C, D])
-    self.assertListEqual(sorted([C, A, D]), [A, C, D])
+    self.assertListEqual(sorted([A, B, C]), [A, B, C])
+    self.assertListEqual(sorted([C, A, B]), [A, B, C])
+    self.assertListEqual(sorted([B, A, C]), [A, B, C])
+    self.assertListEqual(sorted([C, A]), [A, C])

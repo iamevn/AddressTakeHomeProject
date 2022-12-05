@@ -51,15 +51,13 @@ class Person:
             f' {self.age}, {self.address})')
 
   def _is_valid_operand(self, other):
-    return (hasattr(other, "firstname") and
-            hasattr(other, "lastname") and
-            hasattr(other, "age"))
+    return hasattr(other, "firstname") and hasattr(other, "lastname")
 
   def __lt__(self, other):
     if not self._is_valid_operand(other):
       return NotImplemented
-    return ((self.lastname, self.firstname, self.age) <
-            (other.lastname, other.firstname, other.age))
+    return ((self.lastname, self.firstname) <
+            (other.lastname, other.firstname))
 
   def isAdult(self) -> bool:
     return self.age >= 18
