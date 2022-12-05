@@ -32,14 +32,14 @@ def main():
   people = readPeople()
   households = collateHouseholds(people)
 
-  # TODO(evan): make output prettier
   print('# Households:')
   for address, occupants in households.items():
-    print(f'{address} occupants: {len(occupants)}')
+    print(f'{address} ({len(occupants)} occupants)')
 
   print('\n# Adult occupants:')
   for person in sorted(p for p in people if p.isAdult()):
-    print(person)
+    name = f'{person.firstname} {person.lastname}'
+    print(f'{name} - {person.address} - age {person.age}')
 
 
 def readPeople() -> list[Person]:
